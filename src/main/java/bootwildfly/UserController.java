@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
 	
-	@RequestMapping(value = "user}", method = RequestMethod.POST)
+	@RequestMapping(value = "user", method = RequestMethod.POST)
 	public String addUser(){
 		return String.format("created");
 	}
 	
-	@RequestMapping(value = "user/login}", method = RequestMethod.POST)
+	@RequestMapping(value = "user/login", method = RequestMethod.POST)
 	public String login(){
 		return String.format("Logado");
 	}
