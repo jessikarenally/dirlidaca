@@ -1,0 +1,9 @@
+{
+	"id":1,
+	"name":"knapsack",
+	"description":"Fill the bag with maximizing the profit", 
+	"code":1, 
+	"hint":"DP",  
+	"tests":["test_id1","test_id2","test_id3","test_id4","test_id5",]
+
+}

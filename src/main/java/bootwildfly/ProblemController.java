@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProblemController {
 	
-	@RequestMapping(value = "problem}", method = RequestMethod.GET)
+	@RequestMapping(value = "problem", method = RequestMethod.GET)
 	public String getProblems(){
 		return String.format("Todos os problemas");
+	}
+	
+	@RequestMapping(value = "problem", method = RequestMethod.POST)
+	public String saveProblem(){
+		return String.format("Problem Saved!");
 	}
 	
 	@RequestMapping(value = "problem/{problemId}", method = RequestMethod.GET)
