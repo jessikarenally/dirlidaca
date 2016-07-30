@@ -17,12 +17,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration
-@ComponentScan(basePackageClasses = {
-		ProblemController.class,
-		UserController.class
-})
-@EnableAutoConfiguration
 @EnableSwagger2
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
@@ -42,7 +36,7 @@ public class Application extends SpringBootServletInitializer {
                 .groupName("dirli_documentation")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(regex("/api.*"))
+                .paths(regex("/.*"))
                 .build();
     }
      
@@ -53,7 +47,7 @@ public class Application extends SpringBootServletInitializer {
                 .contact("Jessika Rodrigues & Tiaraju Smaneoto")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://github.com/IBM-Bluemix/news-aggregator/blob/master/LICENSE")
-                .version("2.0")
+                .version("1.0")
                 .build();
     }
 }

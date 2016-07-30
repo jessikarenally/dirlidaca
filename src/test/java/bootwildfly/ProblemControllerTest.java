@@ -1,10 +1,14 @@
 package bootwildfly;
 
 import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.expect;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ProblemControllerTest {
@@ -72,12 +76,26 @@ public class ProblemControllerTest {
 	
 	@Test
 	public void testPostProblemSolution(){
+		String body = "{}";
+		Response res = given().contentType("application/json")
+								.body(body)
+								.when()
+								.post("/problem/123/solution");
+		String resBody = res.body().asString();
+		Assert.assertTrue(resBody.equals(body));
 		
 	}
 	
 	@Test
 	public void testPostProblemTest(){
-		
+		String body = "{}";
+		Response res = given().contentType("application/json")
+								.body(body)
+								.when()
+								.post("/problem/123/test");
+		String resBody = res.body().asString();
+		Assert.assertTrue(resBody.equals(body));
+
 	}
 
 }
