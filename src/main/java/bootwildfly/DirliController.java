@@ -1,14 +1,16 @@
 package bootwildfly;
 
+import io.swagger.annotations.Api;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api
 @RestController
-public class HelloWildFlyController {
-
-
-    @RequestMapping("hello")
+public class DirliController {
+	
+	@RequestMapping("hello")
     public String sayHello(){
-        return ("Hello, SpringBoot on Wildfly");
+        return ("Hello, Welcome to Dirli - A Submission System");
     }
 }

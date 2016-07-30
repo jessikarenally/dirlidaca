@@ -1,10 +1,16 @@
 package bootwildfly;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api
 @RestController
 public class UserController {
 	
@@ -19,16 +25,28 @@ public class UserController {
 		return String.format("Logado");
 	}
 	
+	@ApiOperation(value = "userId", nickname = "userId")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
+      })
 	@RequestMapping(value = "user/{userId}", method = RequestMethod.GET)
 	public String getUser(@PathVariable Long userId){
 		return String.format("Id user passado: %s", userId);
 	}
 
+	@ApiOperation(value = "userId", nickname = "userId")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
+      })
 	@RequestMapping(value = "user/{userId}", method = RequestMethod.DELETE)
 	public String deleteUser(@PathVariable Long userId){
 		return String.format("Id user passado: %s", userId);
 	}
 	
+	@ApiOperation(value = "userId", nickname = "userId")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
+      })
 	@RequestMapping(value = "user/{userId}", method = RequestMethod.PUT)
 	public String setUser(@PathVariable Long userId){
 		return String.format("Id userId passado: %s", userId);
