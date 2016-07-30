@@ -36,7 +36,6 @@ public class ProblemControllerTest {
 		ValidatableResponse res = RestAssured.get("/problem/1/solution/1").then();
 		res.statusCode(200);
 		res.body("solution.body",Matchers.hasItems(""));
-		//TODO finish impl
 	}
 
 	@Test
@@ -69,6 +68,16 @@ public class ProblemControllerTest {
 		ValidatableResponse res = RestAssured.get("/problem/statistics").then();
 		res.statusCode(200);
 		res.body("statistics.size()",Matchers.equalTo(0));
+	}
+	
+	@Test
+	public void testPostProblemSolution(){
+		
+	}
+	
+	@Test
+	public void testPostProblemTest(){
+		
 	}
 
 }
