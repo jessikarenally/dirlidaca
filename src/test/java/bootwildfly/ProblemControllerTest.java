@@ -1,8 +1,7 @@
 package bootwildfly;
 
-import static io.restassured.RestAssured.when;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.when;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;

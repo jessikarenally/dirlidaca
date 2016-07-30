@@ -1,8 +1,6 @@
 package rest;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,27 +25,18 @@ public class UserController {
 	}
 	
 	@ApiOperation(value = "userId", nickname = "userId")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
-      })
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public String getUser(@PathVariable Long userId){
 		return String.format("Id user passado: %s", userId);
 	}
 
 	@ApiOperation(value = "userId", nickname = "userId")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
-      })
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
 	public String deleteUser(@PathVariable Long userId){
 		return String.format("Id user passado: %s", userId);
 	}
 	
 	@ApiOperation(value = "userId", nickname = "userId")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "Uder id", required = true, dataType = "long", paramType = "query")
-      })
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	public String setUser(@PathVariable Long userId){
 		return String.format("Id userId passado: %s", userId);
