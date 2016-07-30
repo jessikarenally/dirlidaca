@@ -44,10 +44,17 @@
 
 		<!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
 		<dependency>
-		    <groupId>io.swagger</groupId>
-		    <artifactId>swagger-annotations</artifactId>
-		    <version>1.5.9</version>
-		</dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.2.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.2.2</version>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -135,6 +142,11 @@
 			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
+		<repository>
+	      <id>jcenter-snapshots</id>
+	      <name>jcenter</name>
+	      <url>https://jcenter.bintray.com/</url>
+	    </repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
