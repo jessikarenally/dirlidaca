@@ -1,4 +1,4 @@
-package bootwildfly;
+package rest;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;

@@ -1,6 +1,7 @@
-package models;
+package model;
 
 import java.util.List;
+
 
 public class Problem {
 	
