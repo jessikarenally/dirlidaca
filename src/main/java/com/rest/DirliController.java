@@ -1,4 +1,4 @@
-package rest;
+package com.rest;
 
 import io.swagger.annotations.Api;
 

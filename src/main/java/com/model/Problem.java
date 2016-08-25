@@ -1,15 +1,29 @@
-package model;
+package com.model;
 
-import java.util.List;
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Problem {
+@Entity
+public class Problem implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	private String description;
+	@Id
 	private long code;
+	@Column
+	private String description;
+	@Column
 	private String hint;
-	private List<Test> tests;
+	
+	@Column
 	private String name;
+	
+	public Problem(){}
 	
 	public String getName() {
 		return name;
@@ -34,11 +48,5 @@ public class Problem {
 	}
 	public void setHint(String hint) {
 		this.hint = hint;
-	}
-	public List<Test> getTests() {
-		return tests;
-	}
-	public void setTests(List<Test> tests) {
-		this.tests = tests;
 	}
 }

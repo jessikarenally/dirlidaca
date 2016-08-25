@@ -1,15 +1,21 @@
-package rest;
+package com.rest;
 
 import io.swagger.annotations.ApiOperation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.service.ProblemService;
+
 @RestController
 @RequestMapping(value="/problem")
 public class ProblemController {
+	
+	@Autowired
+	ProblemService problemService;
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
