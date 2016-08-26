@@ -3,11 +3,15 @@ package com.rest;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.model.Problem;
 import com.service.ProblemService;
 
 @RestController
@@ -25,14 +29,16 @@ public class ProblemController {
 	
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")
 	@RequestMapping(method = RequestMethod.POST)
-	public String saveProblem(){
-		return String.format("Problem Saved!");
+	public ResponseEntity<Problem> saveProblem(@RequestBody Problem problem){
+		problemService.save(problem);
+		return new ResponseEntity<Problem>(problem,HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "getProblem", nickname = "getProblem")
 	@RequestMapping(value = "/{problemId}", method = RequestMethod.GET)
-	public String getProblem(@PathVariable Long problemId){
-		return String.format("Given id problem: %s", problemId);
+	public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId){
+		Problem problem = problemService.findByCode(problemId);
+		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
 	}
 
 	@ApiOperation(value="submitSolution", nickname="Submit Solution")

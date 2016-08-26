@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @SpringBootApplication
-@ComponentScan("com.*")
+@ComponentScan()
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

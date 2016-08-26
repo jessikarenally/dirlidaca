@@ -1,27 +1,43 @@
 package rest;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
+import static org.hamcrest.CoreMatchers.is;
 
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
+
+import com.model.Problem;
 
 public class ProblemControllerTest {
 
 	@Test
+	public void testPostProblem(){
+		Problem problem = new Problem("teste2",null,null,1234);
+		given()
+			.body(problem)
+			.contentType("application/json")
+		.when()
+			.post("/problem")
+		.then()
+			.assertThat().statusCode(is(201))
+			.body("name", is("teste2"))
+			.body("code", is(1234));
+	}
+	
+	@Test
 	public void testGetProblemById() {
-		ValidatableResponse res = RestAssured.get("/problem/1").then();
-		res.statusCode(Matchers.equalTo(200));
-		res.body("code", Matchers.equalTo(1));
-		res.body("hint", Matchers.hasItems("DP"));
-		res.body("name", Matchers.hasItems("kanpsack"));
-		res.body("description",Matchers.hasItems("Fill the bag with maximizing the profit"));
+		//Problem problem = new Problem("teste",null,null,123);
+		given()
+			.contentType("application/json")
+		.when()
+			.get("/problem/123")
+		.then()
+			.assertThat()
+			.statusCode(is(200))
+			.body("name", is("teste"))
+			.body("code", is(123));
 
 	}
+	/*
 	@Test
 	public void testNonExistingProblem() {
 		when().get("/problem/99999999").then().statusCode(404);
@@ -96,5 +112,5 @@ public class ProblemControllerTest {
 		Assert.assertTrue(resBody.equals(body));
 
 	}
-
+*/
 }

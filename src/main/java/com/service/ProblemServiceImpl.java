@@ -2,35 +2,37 @@ package com.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.model.Problem;
+import com.persistence.ProblemRepository;
 
 @Service
 public class ProblemServiceImpl implements ProblemService{
+	
+	@Autowired
+	ProblemRepository problemRepository;
 
 	@Override
-	public List<Problem> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Problem> findAll() {
+		return problemRepository.findAll();
 	}
 
 	@Override
 	public List<Problem> findByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return problemRepository.findByName(name);
 	}
 
 	@Override
 	public Problem findByCode(long code) {
-		// TODO Auto-generated method stub
-		return null;
+		return problemRepository.findByCode(code);
 	}
 
 	@Override
 	public void save(Problem problem) {
-		// TODO Auto-generated method stub
-		
+		problemRepository.save(problem);
 	}
 
 }

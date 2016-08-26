@@ -11,6 +11,13 @@ public class Problem implements Serializable {
 	/**
 	 * 
 	 */
+	public Problem(String name, String description, String hint, long code){
+		this.name = name;
+		this.description = description;
+		this.hint=hint;
+		this.code = code;
+	}
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
