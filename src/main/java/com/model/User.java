@@ -1,12 +1,32 @@
 package com.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 	
+	@Id
+	@GeneratedValue
+	private long id;
+	@Column
 	private String username;
+	@Column
 	private String email;
+	@Column
 	private String password;
+	@Column
 	private String name;
 	
+	public User(){
+	}
+	
+	public User(String username,String email){
+		this.username = username;
+		this.email = email;
+	}
 	public String getName() {
 		return name;
 	}
@@ -30,6 +50,10 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public long getId() {
+		return this.id;
 	}
 	
 

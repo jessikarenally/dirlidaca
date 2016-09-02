@@ -3,20 +3,31 @@ package com.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.model.User;
+import com.service.UserService;
 
 @Api
 @RestController
 @RequestMapping(value="/user")
 public class UserController {
 	
+	@Autowired
+	UserService userService;
+	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String addUser(){
-		return String.format("created");
+	public ResponseEntity<User> addUser(@RequestBody User user){
+		userService.save(user);
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -26,20 +37,23 @@ public class UserController {
 	
 	@ApiOperation(value = "userId", nickname = "userId")
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public String getUser(@PathVariable Long userId){
-		return String.format("Id user passado: %s", userId);
+	public ResponseEntity<User> getUser(@PathVariable Long userId){
+		User user = userService.getUser(userId);
+		return new ResponseEntity<User>(user,HttpStatus.OK); 
 	}
 
 	@ApiOperation(value = "userId", nickname = "userId")
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-	public String deleteUser(@PathVariable Long userId){
-		return String.format("Id user passado: %s", userId);
+	public ResponseEntity<Void> deleteUser(@PathVariable Long userId){
+		userService.removeUser(userId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "userId", nickname = "userId")
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-	public String setUser(@PathVariable Long userId){
-		return String.format("Id userId passado: %s", userId);
+	public ResponseEntity<User> setUser(@PathVariable Long userId,@RequestBody User user){
+		userService.update(user);
+		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 
 }

@@ -32,7 +32,6 @@ public class ProblemServiceImpl implements ProblemService{
 
 	@Override
 	public void save(Problem problem) {
-		problemRepository.save(problem);
 	}
 
 }
