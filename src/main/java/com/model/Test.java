@@ -1,12 +1,51 @@
 package com.model;
 
-public class Test {
-	private String name;
-	private String hint;
-	private String givenInput;
-	private String expectedOutput;
-	private String status;//either public or private
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+@SequenceGenerator(name="TEST_SEQUENCE", initialValue=1)
+@Entity
+public class Test implements Serializable {
 	
+	private static final long serialVersionUID = 8891673742523205734L;
+
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TEST_SEQUENCE")
+	@Id
+	private long id;
+	
+	@Column
+	private String name;
+
+	@Column
+	private String hint;
+
+	@Column
+	private String givenInput;
+
+	@Column
+	private String expectedOutput;
+
+	@Column
+	private String status;//either public or private
+
+	@Column
+	private long problemCode;
+	
+	public Test(String name, String hint, String givenInput,
+			String expectedOutput, String status, long problemCode) {
+		this.name = name;
+		this.hint = hint;
+		this.givenInput = givenInput;
+		this.expectedOutput = expectedOutput;
+		this.status = status;
+		this.problemCode = problemCode;
+	}
 	public String getName() {
 		return name;
 	}

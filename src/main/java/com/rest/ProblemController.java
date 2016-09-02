@@ -1,8 +1,11 @@
 package com.rest;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +26,8 @@ public class ProblemController {
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
-	public String getProblems(){
-		return String.format("Todos os problemas");
+	public List<Problem> getProblems(){
+		return problemService.findAll();
 	}
 	
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")

@@ -12,7 +12,7 @@ public interface ProblemRepository extends CrudRepository<Problem, Long>{
 	<S extends Problem> S save(Problem problem);
 	Problem findByCode(long code);
 	void deleteAll();
-	Page<Problem> findAll();
+	List<Problem> findAll();
 	List<Problem> findByName(String name);
 
 }

@@ -16,8 +16,10 @@ public class ProblemServiceImpl implements ProblemService{
 	ProblemRepository problemRepository;
 
 	@Override
-	public Page<Problem> findAll() {
-		return problemRepository.findAll();
+	public List<Problem> findAll() {
+		List<Problem> results = problemRepository.findAll();
+		System.out.println(results.toString());
+		return results;
 	}
 
 	@Override
@@ -32,6 +34,7 @@ public class ProblemServiceImpl implements ProblemService{
 
 	@Override
 	public void save(Problem problem) {
+		problemRepository.save(problem);
 	}
 
 }

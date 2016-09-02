@@ -8,7 +8,7 @@ import com.model.Problem;
 
 public interface ProblemService {
 
-	public Page<Problem> findAll();
+	public List<Problem> findAll();
 
 	public List<Problem> findByName(String name);
 	
