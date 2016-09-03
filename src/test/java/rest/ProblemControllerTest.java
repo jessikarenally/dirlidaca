@@ -3,8 +3,6 @@ package rest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 
 import org.junit.Before;
 import org.junit.Test;
