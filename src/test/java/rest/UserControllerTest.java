@@ -30,7 +30,7 @@ public class UserControllerTest {
 	private UserController userController;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp(){
 		gson = new Gson();
 		user = new User("john", "j@j.com");
 		

@@ -4,6 +4,8 @@ import java.util.List;
 
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,19 +17,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Problem;
-import com.service.ProblemService;
+import com.service.ProblemServiceImpl;
 
 @RestController
 @RequestMapping(value="/problem")
 public class ProblemController {
 	
 	@Autowired
-	ProblemService problemService;
+	ProblemServiceImpl problemService;
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Problem> getProblems(){
-		return problemService.findAll();
+	public ResponseEntity<List<Problem>> getProblems(){
+		List<Problem> problems = problemService.findAll();
+		return problems != null ? new ResponseEntity<List<Problem>>(problems,HttpStatus.OK)
+								: new ResponseEntity<List<Problem>>(problems,HttpStatus.NOT_FOUND);
 	}
 	
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")
@@ -40,8 +44,9 @@ public class ProblemController {
 	@ApiOperation(value = "getProblem", nickname = "getProblem")
 	@RequestMapping(value = "/{problemId}", method = RequestMethod.GET)
 	public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId){
-		Problem problem = problemService.findByCode(problemId);
-		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
+		Problem problem = problemService.findById(problemId);
+		return problem != null ? new ResponseEntity<Problem>(problem, HttpStatus.OK)
+								:new ResponseEntity<Problem>(problem, HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value="submitSolution", nickname="Submit Solution")
@@ -90,5 +95,12 @@ public class ProblemController {
 	@RequestMapping(value = "/{problemId}/statistics", method = RequestMethod.GET)
 	public String getStatistics(@PathVariable Long problemId){
 		return String.format("All statistics for the problem with id %s", problemId);
+	}
+	
+	//only testing purpose
+	public void deleteAll(){
+		for (Problem p : problemService.findAll()) {
+			problemService.removeProblem(p.getId());
+		}
 	}
 }
