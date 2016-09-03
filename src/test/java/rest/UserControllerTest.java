@@ -25,12 +25,15 @@ import static org.hamcrest.Matchers.*;
 public class UserControllerTest {
 
 	private Gson gson;
+	User user;
 	@Autowired
 	private UserController userController;
 
 	@Before
 	public void setUp() throws Exception {
 		gson = new Gson();
+		user = new User("john", "j@j.com");
+		
 	}
 
 	@Test
@@ -39,7 +42,6 @@ public class UserControllerTest {
 
 	@Test
 	public void testPostUser() {
-		User user = new User("john", "j@j.com");
 		given()
 			.contentType("application/json")
 			.body(gson.toJson(user)).
@@ -51,7 +53,6 @@ public class UserControllerTest {
 
 	@Test
 	public void testGetUserByUsername() {
-		User user = new User("john", "j@j.com");
 		long id = userController.addUser(user).getBody().getId();
 		
 		given()
@@ -60,27 +61,44 @@ public class UserControllerTest {
 		when()
 			.get("/user/{userId}").
 		then()
-			.assertThat().statusCode(is(200));
-		//TODO check body response
+			.assertThat().statusCode(is(200))
+			.body("username", equalTo("john"))
+			.body("email", equalTo("j@j.com"));
 	}
-
+	
+	@Test
 	public void testDeleteUserByUserId() {
-		
-	}
-
-	public void testEditUserByUserId() {
-		User user = new User("john", "j@j.com");
-		User newUser = new User("paul", "j@j.com");
 		long id = userController.addUser(user).getBody().getId();
 		
 		given()
-			.accept("application/json")
+			.pathParam("userId", id).
+		when()
+			.delete("/user/{userId}").
+		then()
+			.assertThat().statusCode(is(200));
+		given()
+			.pathParam("userId", id).
+		when()
+			.get("user/{userId}").
+		then()
+			.assertThat().statusCode(is(404));
+		
+	}
+
+	@Test
+	public void testEditUserByUserId() {
+		User newUser = new User("paul", "p@p.com");
+		long id = userController.addUser(user).getBody().getId();
+		
+		given()
+			.contentType("application/json")
 			.pathParam("userId", id)
-			.body(newUser).
+			.body(gson.toJson(newUser)).
 		when()
 			.put("/user/{userId}").
 		then()
-			.assertThat().statusCode(is(200)).
-			 and().assertThat().body("username", equalTo("paul"));
+			.assertThat().statusCode(is(200))
+			.body("username", equalTo("paul"))
+			.body("email", equalTo("p@p.com"));
 	}
 }
