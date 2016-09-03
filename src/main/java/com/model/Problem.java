@@ -12,12 +12,11 @@ public class Problem implements Serializable {
 	/**
 	 * 
 	 */
-	public Problem(String name, String description, String hint, long code, List<Test> publicTests){
+	public Problem(String name, String description, String hint, long code){
 		this.name = name;
 		this.description = description;
 		this.hint=hint;
 		this.code = code;
-		this.publicTests = publicTests;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -28,8 +27,6 @@ public class Problem implements Serializable {
 	private String description;
 	@Column
 	private String hint;
-	@Column
-	private List<Test> publicTests;
 	
 	@Column
 	private String name;
@@ -59,13 +56,5 @@ public class Problem implements Serializable {
 	}
 	public void setHint(String hint) {
 		this.hint = hint;
-	}
-
-	public List<Test> getPublicTests() {
-		return publicTests;
-	}
-
-	public void setPublicTests(List<Test> publicTests) {
-		this.publicTests = publicTests;
 	}
 }

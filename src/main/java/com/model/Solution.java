@@ -15,7 +15,7 @@ public class Solution implements Serializable{
 
 	private static final long serialVersionUID = -5653197660148721839L;
 
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TEST_SEQUENCE")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SOLUTION_SEQUENCE")
 	@Id
 	private long id;
 	
