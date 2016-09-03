@@ -115,7 +115,7 @@
 				<version>2.19.1</version>
 				<configuration>
 					<includes>
-						<include>bootwildfly.*</include>
+						<include>.*</include>
 					</includes>
 				</configuration>
 				<goals>

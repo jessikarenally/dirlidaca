@@ -39,7 +39,7 @@ public class UserController {
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<User> getUser(@PathVariable Long userId){
 		User user = userService.getUser(userId);
-		return new ResponseEntity<User>(user,HttpStatus.OK); 
+		return user != null ? new ResponseEntity<User>(user,HttpStatus.OK) : new ResponseEntity<User>(user,HttpStatus.NOT_FOUND); 
 	}
 
 	@ApiOperation(value = "userId", nickname = "userId")
