@@ -18,7 +18,6 @@ public class ProblemServiceImpl implements ProblemService{
 	@Override
 	public List<Problem> findAll() {
 		List<Problem> results = problemRepository.findAll();
-		System.out.println(results.toString());
 		return results;
 	}
 
