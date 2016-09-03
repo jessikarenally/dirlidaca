@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -11,17 +12,17 @@ public class Problem implements Serializable {
 	/**
 	 * 
 	 */
-	public Problem(String name, String description, String hint, long code){
+	public Problem(String name, String description, String hint){
 		this.name = name;
 		this.description = description;
 		this.hint=hint;
-		this.code = code;
 	}
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private long code;
+	@GeneratedValue
+	private long id;
 	@Column
 	private String description;
 	@Column
@@ -44,11 +45,11 @@ public class Problem implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public long getCode() {
-		return code;
+	public long getId() {
+		return id;
 	}
 	public void setCode(long code) {
-		this.code = code;
+		this.id = code;
 	}
 	public String getHint() {
 		return hint;

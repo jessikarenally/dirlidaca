@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Problem;
-import com.service.ProblemService;
+import com.service.ProblemServiceImpl;
 
 @RestController
 @RequestMapping(value="/problem")
 public class ProblemController {
 	
 	@Autowired
-	ProblemService problemService;
+	ProblemServiceImpl problemService;
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class ProblemController {
 	@ApiOperation(value = "getProblem", nickname = "getProblem")
 	@RequestMapping(value = "/{problemId}", method = RequestMethod.GET)
 	public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId){
-		Problem problem = problemService.findByCode(problemId);
+		Problem problem = problemService.findById(problemId);
 		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
 	}
 

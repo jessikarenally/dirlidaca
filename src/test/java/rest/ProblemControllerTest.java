@@ -3,38 +3,66 @@ package rest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.hamcrest.Matchers.*;
+
+import com.Application;
+import com.google.gson.Gson;
 import com.model.Problem;
+import com.rest.ProblemController;
 
+@SpringApplicationConfiguration(classes = Application.class)
+@WebIntegrationTest()
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ProblemControllerTest {
+	
+	private Gson gson;
+	private Problem problem; 
+	
+	@Autowired
+	private ProblemController problemController;
+	
+	@Before
+	public void setUp(){
+		gson = new Gson();
+		problem = new Problem("test2","test","nohint");
+	}
 
 	@Test
 	public void testPostProblem(){
-		Problem problem = new Problem("teste2",null,null,1234);
 		given()
 			.body(problem)
 			.contentType("application/json")
-		.when()
-			.post("/problem")
-		.then()
+			.body(gson.toJson(problem)).
+		when()
+			.post("/problem").
+		then()
 			.assertThat().statusCode(is(201))
-			.body("name", is("teste2"))
-			.body("code", is(1234));
+			.body("name", is("test2"))
+			.body("hint", equalTo("nohint"));
 	}
 	
 	@Test
 	public void testGetProblemById() {
-		//Problem problem = new Problem("teste",null,null,123);
+		long id = problemController.saveProblem(problem).getBody().getId();
+		
 		given()
 			.contentType("application/json")
+			.pathParam("problemId", id)
 		.when()
-			.get("/problem/123")
+			.get("/problem/{problemId}")
 		.then()
 			.assertThat()
 			.statusCode(is(200))
-			.body("name", is("teste"))
-			.body("code", is(123));
+			.body("name", is("test2"))
+			.body("description", equalTo("test"));
 
 	}
 	/*
