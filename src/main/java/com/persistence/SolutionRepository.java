@@ -8,7 +8,6 @@ import com.model.Solution;
 
 public interface SolutionRepository extends  CrudRepository<Solution, Long>{
 
-	Solution save(Solution test);
-	Solution findById(long id);
-	List<Solution> findAll();
+	List<Solution> findByProblemId(Long problemId);
+
 }
