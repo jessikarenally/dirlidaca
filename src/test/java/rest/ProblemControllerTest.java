@@ -2,6 +2,9 @@ package rest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.hamcrest.Matchers.*;
 
 import com.Application;
 import com.google.gson.Gson;
@@ -33,6 +34,21 @@ public class ProblemControllerTest {
 	public void setUp(){
 		gson = new Gson();
 		problem = new Problem("test2","test","nohint");
+		problemController.deleteAll();
+	}
+	
+	@Test
+	public void testGetProblems() {
+		Problem newProblem = new Problem("test3", "test3", "nohint3");
+		problemController.saveProblem(newProblem);
+		problemController.saveProblem(problem);
+		
+		given().
+		when()
+			.get("/problem").
+		then()
+			.statusCode(is(200))
+			.body("size()", is(2));	
 	}
 
 	@Test
@@ -44,7 +60,7 @@ public class ProblemControllerTest {
 		when()
 			.post("/problem").
 		then()
-			.assertThat().statusCode(is(201))
+			.statusCode(is(201))
 			.body("name", is("test2"))
 			.body("hint", equalTo("nohint"));
 	}
@@ -59,25 +75,23 @@ public class ProblemControllerTest {
 		.when()
 			.get("/problem/{problemId}")
 		.then()
-			.assertThat()
 			.statusCode(is(200))
 			.body("name", is("test2"))
 			.body("description", equalTo("test"));
 
 	}
-	/*
 	@Test
 	public void testNonExistingProblem() {
-		when().get("/problem/99999999").then().statusCode(404);
+		long id = 9129391239L; //Non Existing Id
+		given()
+			.pathParam("problemId", id).
+		when()
+			.get("/problem/{problemId}").
+		then()
+			.statusCode(is(404));
 	}
 
-	@Test
-	public void testGetProblem() {
-		ValidatableResponse res = RestAssured.get("/problem").then();
-		res.statusCode(Matchers.equalTo(200));
-		res.body("problems.size()",Matchers.equalTo(0));
-	}
-	
+	/*
 	@Test
 	public void testGetProblemSpecificSolution() {
 		ValidatableResponse res = RestAssured.get("/problem/1/solution/1").then();

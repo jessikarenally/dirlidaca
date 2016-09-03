@@ -2,6 +2,8 @@ package com.rest;
 
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,10 @@ public class ProblemController {
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
-	public String getProblems(){
-		return String.format("Todos os problemas");
+	public ResponseEntity<List<Problem>> getProblems(){
+		List<Problem> problems = problemService.findAll();
+		return problems != null ? new ResponseEntity<List<Problem>>(problems,HttpStatus.OK)
+								: new ResponseEntity<List<Problem>>(problems,HttpStatus.NOT_FOUND);
 	}
 	
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")
@@ -38,7 +42,8 @@ public class ProblemController {
 	@RequestMapping(value = "/{problemId}", method = RequestMethod.GET)
 	public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId){
 		Problem problem = problemService.findById(problemId);
-		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
+		return problem != null ? new ResponseEntity<Problem>(problem, HttpStatus.OK)
+								:new ResponseEntity<Problem>(problem, HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value="submitSolution", nickname="Submit Solution")
@@ -87,5 +92,12 @@ public class ProblemController {
 	@RequestMapping(value = "/{problemId}/statistics", method = RequestMethod.GET)
 	public String getStatistics(@PathVariable Long problemId){
 		return String.format("All statistics for the problem with id %s", problemId);
+	}
+	
+	//only testing purpose
+	public void deleteAll(){
+		for (Problem p : problemService.findAll()) {
+			problemService.removeProblem(p.getId());
+		}
 	}
 }
