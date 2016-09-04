@@ -84,6 +84,14 @@ public class ProblemTest implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public long getProblemCode() {
+		return problemCode;
+	}
+
+	public void setProblemCode(long problemCode) {
+		this.problemCode = problemCode;
+	}
 	
 	
 

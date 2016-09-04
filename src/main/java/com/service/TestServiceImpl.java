@@ -36,4 +36,8 @@ public class TestServiceImpl implements TestService {
 		testRepository.delete(id);
 	}
 
+	@Override
+	public List<ProblemTest> findByProblemCode(long problemCode) {
+		return testRepository.findByProblemCode(problemCode);
+	}
 }

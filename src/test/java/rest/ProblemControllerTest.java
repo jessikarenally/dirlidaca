@@ -16,8 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.Application;
 import com.google.gson.Gson;
 import com.model.Problem;
+import com.model.ProblemTest;
 import com.model.Solution;
 import com.rest.ProblemController;
+import com.rest.TestController;
 
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest()
@@ -29,6 +31,9 @@ public class ProblemControllerTest {
 	
 	@Autowired
 	private ProblemController problemController;
+	
+	@Autowired
+	private TestController testController;
 	
 	@Before
 	public void setUp(){
@@ -143,25 +148,55 @@ public class ProblemControllerTest {
 			.body("size()", equalTo(2))
 			.statusCode(200);
 	}
-/*
 	@Test
 	public void testGetProblemSpecificTest() {
-		ValidatableResponse res = RestAssured.get("/problem/test/1").then();
-		res.statusCode(200);
-		res.body("test.name",Matchers.hasItem(""));
-		res.body("test.hint",Matchers.hasItem(""));
-		res.body("test.input",Matchers.hasItem(""));
-		res.body("test.expectedOutput",Matchers.hasItem(""));
+		ProblemTest test = new ProblemTest("testa soma", "teste os extremos", "2 + 2", "4", "public", 1);
+		long id = testController.saveTest(test).getBody().getId();
+
+		given()
+			.pathParam("problemId", 1)
+			.pathParam("testId", id)
+		.when()
+			.get("/problem/{problemId}/test/{testId}")
+		.then()
+			.statusCode(is(200))
+			.body("name", is("testa soma"))
+			.body("status", is("public"));
 
 	}
 
 	@Test
 	public void testGetProblemTests() {
-		ValidatableResponse res = RestAssured.get("/problem/test").then();
-		res.statusCode(200);
-		res.body("test.size()",Matchers.equalTo(0));
+		ProblemTest test = new ProblemTest("testa1", "teste os extremos", "2 + 2", "4", "public", 2);
+		ProblemTest test2 = new ProblemTest("testa2", "teste os extremos", "2 + 2", "4", "public", 2);
+		testController.saveTest(test);
+		testController.saveTest(test2);
+		
+		given()
+			.pathParam("problemId", 2)
+		.when()
+			.get("/problem/{problemId}/test")
+		.then()
+			.statusCode(is(200))
+			.body("size()", is(2));
+	}
+	
+	@Test
+	public void testCreateTestInProblem(){
+		ProblemTest test = new ProblemTest("testa1", "teste os extremos", "2 + 2", "4", "public", 3);
+		given()
+			.body(test)
+			.contentType("application/json")
+			.body(gson.toJson(test))
+			.pathParam("problemId", 9)
+		.when()
+			.post("/problem/{problemId}/test")
+		.then()
+			.statusCode(is(201))
+			.body("name", is("testa1"));
 	}
 
+/*
 	@Test
 	public void testgetProblemStatistics() {
 		ValidatableResponse res = RestAssured.get("/problem/statistics").then();

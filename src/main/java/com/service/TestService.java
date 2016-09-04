@@ -13,4 +13,6 @@ public interface TestService {
 
 	public void removeTest(long id);
 	
+	public List<ProblemTest> findByProblemCode(long problemCode);
+	
 }

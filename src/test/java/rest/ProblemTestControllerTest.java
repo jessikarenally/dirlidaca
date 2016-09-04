@@ -65,7 +65,7 @@ public class ProblemTestControllerTest {
 	}
 	
 	@Test
-	public void testGetTest(){
+	public void testGetTestS(){
 		ProblemTest test2 = new ProblemTest("testa2", "teste os extremos", "2 + 2", "4", "public", 2);
 		testController.saveTest(test);
 		testController.saveTest(test2);
@@ -76,7 +76,6 @@ public class ProblemTestControllerTest {
 		.then()
 			.statusCode(is(200))
 			.body("size()", is(2));
-
 	}
 	
 	

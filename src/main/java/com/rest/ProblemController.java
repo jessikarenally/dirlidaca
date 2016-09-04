@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Problem;
+import com.model.ProblemTest;
 import com.model.Solution;
 import com.service.ProblemServiceImpl;
 import com.service.SolutionServiceImpl;
+import com.service.TestServiceImpl;
 
 @RestController
 @RequestMapping(value="/problem")
@@ -24,8 +26,12 @@ public class ProblemController {
 	
 	@Autowired
 	ProblemServiceImpl problemService;
+	
 	@Autowired
 	SolutionServiceImpl solutionService;
+	
+	@Autowired
+	TestServiceImpl testService;
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
@@ -79,23 +85,30 @@ public class ProblemController {
 	
 	//TESTS
 	@ApiOperation(value = "getTest", nickname = "getTest")
-	@RequestMapping(value = "/{problemId}/test/{idtest}", method = RequestMethod.GET)
-	public String getTest(@PathVariable Long problemId, @PathVariable Long idtest){
-		return String.format("Id problema passado: %s e id test: %s", problemId, idtest);
+	@RequestMapping(value = "/{problemId}/test/{testId}", method = RequestMethod.GET)
+	public ResponseEntity<ProblemTest> getTest(@PathVariable Long problemId, @PathVariable Long testId){
+		ProblemTest test = testService.findById(testId);
+		return new ResponseEntity<ProblemTest>(test, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "getTest", nickname = "getTest")
+	@ApiOperation(value = "getTests", nickname = "getTests")
 	@RequestMapping(value = "/{problemId}/test", method = RequestMethod.GET)
-	public String gettests(@PathVariable Long problemId){
-		return String.format("Todas os tests do problema de id %s", problemId);
+	public ResponseEntity<List<ProblemTest>> getTests(@PathVariable Long problemId){
+		List<ProblemTest> tests = testService.findByProblemCode(problemId);
+		return new ResponseEntity<List<ProblemTest>>(tests, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value="createTest", nickname="Create Test")
 	@RequestMapping(value = "/{problemId}/test", method = RequestMethod.POST)
-	public String createTest(@PathVariable Long problemId){
-		return String.format("Test to the problem %s successfully created", problemId);
+	public ResponseEntity<ProblemTest> createTest(@PathVariable Long problemId, 
+							@RequestBody ProblemTest test){
+		test.setProblemCode(problemId);
+		testService.save(test);
+		
+		return new ResponseEntity<ProblemTest>(test, HttpStatus.CREATED);
 	}
 	
+	//STATISTICS
 	@ApiOperation(value = "getStatistics", nickname = "getStatistics")
 	@RequestMapping(value = "/{problemId}/statistics/{statisticsId}", method = RequestMethod.GET)
 	public String getStatisticss(@PathVariable Long problemId, @PathVariable Long statisticsId){
