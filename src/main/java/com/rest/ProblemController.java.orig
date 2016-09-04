@@ -1,10 +1,13 @@
 package com.rest;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Problem;
-import com.model.Solution;
 import com.service.ProblemServiceImpl;
-import com.service.SolutionServiceImpl;
 
 @RestController
 @RequestMapping(value="/problem")
@@ -24,15 +25,18 @@ public class ProblemController {
 	
 	@Autowired
 	ProblemServiceImpl problemService;
-	@Autowired
-	SolutionServiceImpl solutionService;
 	
 	@ApiOperation(value = "getProblems", nickname = "getProblems")
 	@RequestMapping(method = RequestMethod.GET)
+<<<<<<< HEAD
+	public List<Problem> getProblems(){
+		return problemService.findAll();
+=======
 	public ResponseEntity<List<Problem>> getProblems(){
 		List<Problem> problems = problemService.findAll();
 		return problems != null ? new ResponseEntity<List<Problem>>(problems,HttpStatus.OK)
 								: new ResponseEntity<List<Problem>>(problems,HttpStatus.NOT_FOUND);
+>>>>>>> problemController
 	}
 	
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")
@@ -50,34 +54,24 @@ public class ProblemController {
 								:new ResponseEntity<Problem>(problem, HttpStatus.NOT_FOUND);
 	}
 
-	
-	//SOLUTIONS
 	@ApiOperation(value="submitSolution", nickname="Submit Solution")
 	@RequestMapping(value="/{problemId}/solution", method = RequestMethod.POST)
-	public ResponseEntity<Solution> submitSolution(@PathVariable Long problemId, @RequestBody Solution solution){
-		solutionService.save(solution);
-		return new ResponseEntity<Solution>(solution,HttpStatus.CREATED);
+	public String submitSolution(@PathVariable Long problemId){
+		return String.format("Problem's solution submited successfully");
 	}
 	
 	@ApiOperation(value = "getsolution", nickname = "getsolution")
 	@RequestMapping(value = "/{problemId}/solution/{solutionId}", method = RequestMethod.GET)
-	public ResponseEntity<Solution> getSolution(@PathVariable Long problemId, @PathVariable Long solutionId){
-		Solution solution = solutionService.getSolution(solutionId);
-		return solution != null ? new ResponseEntity<Solution>(solution,HttpStatus.OK)
-								: new ResponseEntity<Solution>(solution,HttpStatus.NOT_FOUND);
+	public String getSolution(@PathVariable Long problemId, @PathVariable Long solutionId){
+		return String.format("Id problema passado: %s e id solution: %s", problemId, solutionId);
 	}
 	
 	@ApiOperation(value = "problemId", nickname = "problemId")
 	@RequestMapping(value = "/{problemId}/solution", method = RequestMethod.GET)
-	public ResponseEntity<List<Solution>> getSolutions(@PathVariable Long problemId){
-		List<Solution> solutions  = solutionService.getSolutionByProblemId(problemId);
-		
-		return solutions != null ? new ResponseEntity<List<Solution>>(solutions,HttpStatus.OK)
-								 : new ResponseEntity<List<Solution>>(solutions,HttpStatus.NOT_FOUND); 
+	public String getSolutions(@PathVariable Long problemId){
+		return String.format("Todas as solucoes do problema de id %s", problemId);
 	}
 	
-	
-	//TESTS
 	@ApiOperation(value = "getTest", nickname = "getTest")
 	@RequestMapping(value = "/{problemId}/test/{idtest}", method = RequestMethod.GET)
 	public String getTest(@PathVariable Long problemId, @PathVariable Long idtest){

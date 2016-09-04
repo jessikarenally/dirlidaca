@@ -3,6 +3,7 @@ package rest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
+import io.restassured.http.ContentType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.Application;
 import com.google.gson.Gson;
 import com.model.Problem;
+import com.model.Solution;
 import com.rest.ProblemController;
 
 @SpringApplicationConfiguration(classes = Application.class)
@@ -52,7 +54,6 @@ public class ProblemControllerTest {
 	@Test
 	public void testPostProblem(){
 		given()
-			.body(problem)
 			.contentType("application/json")
 			.body(gson.toJson(problem)).
 		when()
@@ -89,21 +90,60 @@ public class ProblemControllerTest {
 			.statusCode(is(404));
 	}
 
-	/*
+	@Test
+	public void testPostProblemSolution(){
+		int id = (int) problemController.saveProblem(problem).getBody().getId();
+		Solution solution = new Solution("abc", "abc", "abc", true, id);
+		given()
+			.contentType("application/json")
+			.pathParam("problemId", id)
+			.body(gson.toJson(solution)).
+		when()
+			.post("/problem/{problemId}/solution").
+		then()
+			.statusCode(is(201))
+			.body("solutionBody", equalTo("abc"))
+			.body("givenOutput", equalTo("abc"))
+			.body("givenInput", equalTo("abc"))
+			.body("problemId", is(id));
+	}
+	
 	@Test
 	public void testGetProblemSpecificSolution() {
-		ValidatableResponse res = RestAssured.get("/problem/1/solution/1").then();
-		res.statusCode(200);
-		res.body("solution.body",Matchers.hasItems(""));
+		int id = (int) problemController.saveProblem(problem).getBody().getId();
+		Solution solution = new Solution("abc", "abc", "abc", true, id);
+		int solutionId = (int) problemController.submitSolution(problem.getId(), solution).getBody().getId();
+		
+		given()
+			.pathParam("problemId", id)
+			.pathParam("solutionId", solutionId).
+		when()
+			.get("/problem/{problemId}/solution/{solutionId}").
+		then()
+			.statusCode(is(200))
+			.body("solutionBody", equalTo("abc"))
+			.body("givenOutput", equalTo("abc"))
+			.body("givenInput", equalTo("abc"))
+			.body("problemId", is(id));
 	}
 
 	@Test
 	public void testGetProblemSolutions() {
-		ValidatableResponse res = RestAssured.get("/problem/1/solution").then();
-		res.statusCode(200);
-		res.body("solution.size()", Matchers.equalTo(0));
+		int id = (int) problemController.saveProblem(problem).getBody().getId();
+		Solution solution1 = new Solution("abc", "abc", "abc", true, id);
+		Solution solution2 = new Solution("cba", "cba", "cba", false, id);
+		problemController.submitSolution(problem.getId(), solution1).getBody().getId();
+		problemController.submitSolution(problem.getId(), solution2).getBody().getId();
+		
+		given()
+			.pathParam("problemId", id).
+		when()
+			.get("/problem/{problemId}/solution").
+		then()
+			.body("size()", equalTo(2))
+			.statusCode(200);
 	}
-
+/*
 	@Test
 	public void testGetProblemSpecificTest() {
 		ValidatableResponse res = RestAssured.get("/problem/test/1").then();
@@ -129,17 +169,7 @@ public class ProblemControllerTest {
 		res.body("statistics.size()",Matchers.equalTo(0));
 	}
 	
-	@Test
-	public void testPostProblemSolution(){
-		String body = "{}";
-		Response res = given().contentType("application/json")
-								.body(body)
-								.when()
-								.post("/problem/123/solution");
-		String resBody = res.body().asString();
-		Assert.assertTrue(resBody.equals(body));
-		
-	}
+	
 	
 	@Test
 	public void testPostProblemTest(){

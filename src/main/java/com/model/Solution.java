@@ -15,8 +15,8 @@ public class Solution implements Serializable{
 
 	private static final long serialVersionUID = -5653197660148721839L;
 
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SOLUTION_SEQUENCE")
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SOLUTION_SEQUENCE")
 	private long id;
 	
 	@Column
@@ -32,16 +32,23 @@ public class Solution implements Serializable{
 	private boolean valid;
 	
 	@Column
-	private long problemCode;
+	private long problemId;
 	
 	public Solution(String solutionBody, String givenOutput, String givenInput,
-			boolean valid, long problemCode) {
+			boolean valid, long problemId) {
 		this.solutionBody = solutionBody;
 		this.givenOutput = givenOutput;
 		this.givenInput = givenInput;
 		this.valid = valid;
-		this.problemCode = problemCode;
+		this.problemId = problemId;
 	}
+	
+	public Solution(){}
+	
+	public long getId() {
+		return this.id;
+	}
+	
 	public String getSolutionBody() {
 		return solutionBody;
 	}
@@ -60,11 +67,11 @@ public class Solution implements Serializable{
 	public void setGivenInput(String givenInput) {
 		this.givenInput = givenInput;
 	}
-	public long getProblemCode() {
-		return problemCode;
+	public long getProblemId() {
+		return problemId;
 	}
-	public void setProblemCode(long problemCode) {
-		this.problemCode = problemCode;
+	public void setProblemId(long problemId) {
+		this.problemId = problemId;
 	}
 	public boolean isValid() {
 		return valid;

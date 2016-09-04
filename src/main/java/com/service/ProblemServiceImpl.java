@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.model.Problem;
+import com.model.Solution;
 import com.persistence.ProblemRepository;
 
 @Service
@@ -14,6 +15,8 @@ public class ProblemServiceImpl implements ProblemService{
 	
 	@Autowired
 	ProblemRepository problemRepository;
+	
+	
 
 	@Override
 	public List<Problem> findAll() {
@@ -21,7 +24,6 @@ public class ProblemServiceImpl implements ProblemService{
 		for(Problem element:problemRepository.findAll()){
 			result.add(element);
 		}
-		
 		return result;
 	}
 
@@ -44,5 +46,4 @@ public class ProblemServiceImpl implements ProblemService{
 	public void removeProblem(long id){
 		problemRepository.delete(id);
 	}
-
 }
