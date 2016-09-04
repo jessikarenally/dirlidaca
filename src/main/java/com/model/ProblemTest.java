@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 
 @SequenceGenerator(name="TEST_SEQUENCE", initialValue=1)
 @Entity
-public class Test implements Serializable {
+public class ProblemTest implements Serializable {
 	
 	private static final long serialVersionUID = 8891673742523205734L;
 
@@ -37,7 +37,9 @@ public class Test implements Serializable {
 	@Column
 	private long problemCode;
 	
-	public Test(String name, String hint, String givenInput,
+	public ProblemTest(){}
+	
+	public ProblemTest(String name, String hint, String givenInput,
 			String expectedOutput, String status, long problemCode) {
 		this.name = name;
 		this.hint = hint;
@@ -45,6 +47,12 @@ public class Test implements Serializable {
 		this.expectedOutput = expectedOutput;
 		this.status = status;
 		this.problemCode = problemCode;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;

@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.model.Test;
+import com.model.ProblemTest;
 
-public interface TestRepository extends CrudRepository<Test, Long>{
+public interface TestRepository extends CrudRepository<ProblemTest, Long>{
 
-	Test save(Test test);
-	Test findById(long id);
-	List<Test> findAll();
+	ProblemTest save(ProblemTest test);
+	ProblemTest findById(long id);
+	List<ProblemTest> findAll();
 }
