@@ -1,5 +1,7 @@
 package com.rest;
 
+import java.security.Principal;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -23,7 +25,6 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 	
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<User> addUser(@RequestBody User user){
 		userService.save(user);
@@ -33,6 +34,11 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(){
 		return String.format("Logado");
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public Principal login(Principal principal){
+		return principal;
 	}
 	
 	@ApiOperation(value = "userId", nickname = "userId")

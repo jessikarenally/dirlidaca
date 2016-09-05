@@ -49,8 +49,8 @@ public class ProblemControllerTest {
 		
 		given().
 		when()
-			.get("/problem").
-		then()
+			.get("/problem")
+		.then()
 			.statusCode(is(200))
 			.body("size()", is(2));	
 	}
@@ -59,8 +59,8 @@ public class ProblemControllerTest {
 	public void testPostProblem(){
 		given()
 			.contentType("application/json")
-			.body(gson.toJson(problem)).
-		when()
+			.body(gson.toJson(problem))
+		.when()
 			.post("/problem").
 		then()
 			.statusCode(is(201))
