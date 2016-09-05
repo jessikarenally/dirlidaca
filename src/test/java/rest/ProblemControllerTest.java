@@ -3,7 +3,6 @@ package rest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
-import io.restassured.http.ContentType;
 
 import org.junit.Before;
 import org.junit.Test;

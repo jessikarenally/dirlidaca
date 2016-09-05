@@ -1,9 +1,8 @@
 package com.rest;
 
-import java.util.List;
-
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.ProblemTest;
-import com.service.TestService;
 import com.service.TestServiceImpl;
 
 @RestController
@@ -62,5 +60,12 @@ public class TestController {
 	public ResponseEntity<ProblemTest> deleteTestById(@PathVariable Long testId){
 		testService.removeTest(testId);
 		return new ResponseEntity<ProblemTest>(HttpStatus.OK);
+	}
+
+	// only for tests purpose
+	public void deleteAll() {
+		for(ProblemTest t : testService.findAll()){
+			testService.removeTest(t.getId());
+		}
 	}
 }

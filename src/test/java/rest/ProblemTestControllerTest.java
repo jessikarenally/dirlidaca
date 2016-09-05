@@ -1,12 +1,9 @@
 package rest;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import io.restassured.response.Response;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +32,7 @@ public class ProblemTestControllerTest {
 	public void setUp(){
 		gson = new Gson();
 		test = new ProblemTest("testa soma", "teste os extremos", "2 + 2", "4", "public", 1);
+		testController.deleteAll();
 	}
 
 	@Test

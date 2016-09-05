@@ -34,6 +34,9 @@ public class Solution implements Serializable{
 	@Column
 	private long problemId;
 	
+	@Column
+	private long userId;
+	
 	public Solution(String solutionBody, String givenOutput, String givenInput,
 			boolean valid, long problemId) {
 		this.solutionBody = solutionBody;
@@ -79,7 +82,11 @@ public class Solution implements Serializable{
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
-	
-	
+	public long getUserId() {
+		return userId;
+	}
 
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 }

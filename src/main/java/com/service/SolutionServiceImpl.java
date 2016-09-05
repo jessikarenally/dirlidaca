@@ -39,4 +39,8 @@ public class SolutionServiceImpl implements SolutionService{
 		return solutionRepository.findByProblemId(problemId);
 	}
 
+	public List<Solution> getSolutionsByUserId(Long userId) {
+		return solutionRepository.findByUserId(userId);
+	}	
+
 }
