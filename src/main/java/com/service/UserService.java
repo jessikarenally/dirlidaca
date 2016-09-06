@@ -7,7 +7,7 @@ import com.model.User;
 public interface UserService {
 	
 	
-	public List<User> getUserByUsername(String username);
+	public User getUserByUsername(String username);
 
 	public void save(User user);
 	

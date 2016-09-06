@@ -11,7 +11,7 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column
+	@Column()
 	private String username;
 	@Column
 	private String email;
@@ -26,6 +26,11 @@ public class User {
 	public User(String username,String email){
 		this.username = username;
 		this.email = email;
+	}
+	public User(String username,String email,String password){
+		this.username = username;
+		this.email = email;
+		this.password = password;
 	}
 	public String getName() {
 		return name;
