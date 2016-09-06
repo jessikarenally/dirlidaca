@@ -229,10 +229,11 @@ public class ProblemControllerTest {
 		problemController.saveProblem(problem);
 		
 		given()
+			.header("Authorization",token)
 		.when()
 			.get("/problem/statistics")
 		.then()
 			.statusCode(is(200))
-			.body(is("Problemas existentes: 1 \n Usuarios do sistema: 0"));
+			.body(is("Problemas existentes: 1 \n Usuarios do sistema: 1"));
 	}
 }
