@@ -195,26 +195,16 @@ public class ProblemControllerTest {
 			.body("name", is("testa1"));
 	}
 
-/*
+
 	@Test
 	public void testgetProblemStatistics() {
-		ValidatableResponse res = RestAssured.get("/problem/statistics").then();
-		res.statusCode(200);
-		res.body("statistics.size()",Matchers.equalTo(0));
+		problemController.saveProblem(problem);
+		
+		given()
+		.when()
+			.get("/problem/statistics")
+		.then()
+			.statusCode(is(200))
+			.body(is("Problemas existentes: 1 \n Usuarios do sistema: 0"));
 	}
-	
-	
-	
-	@Test
-	public void testPostProblemTest(){
-		String body = "{}";
-		Response res = given().contentType("application/json")
-								.body(body)
-								.when()
-								.post("/problem/123/test");
-		String resBody = res.body().asString();
-		Assert.assertTrue(resBody.equals(body));
-
-	}
-*/
 }

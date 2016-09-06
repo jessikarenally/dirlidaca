@@ -15,8 +15,6 @@ public class ProblemServiceImpl implements ProblemService{
 	
 	@Autowired
 	ProblemRepository problemRepository;
-	
-	
 
 	@Override
 	public List<Problem> findAll() {
@@ -45,5 +43,10 @@ public class ProblemServiceImpl implements ProblemService{
 	@Override
 	public void removeProblem(long id){
 		problemRepository.delete(id);
+	}
+
+	@Override
+	public long countProblems() {
+		return problemRepository.count();
 	}
 }

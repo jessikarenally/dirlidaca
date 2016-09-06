@@ -16,6 +16,7 @@ public interface UserService {
 	public User getUser(Long userId); 
 
 	public void removeUser(Long userId); 
-
+	
+	public long countUsers();
 
 }

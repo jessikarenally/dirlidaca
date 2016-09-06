@@ -15,5 +15,7 @@ public interface ProblemService {
 	public void save(Problem problem);
 
 	public void removeProblem(long id);
+	
+	public long countProblems();
 
 }

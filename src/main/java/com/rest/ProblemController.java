@@ -18,6 +18,7 @@ import com.model.ProblemTest;
 import com.model.Solution;
 import com.service.ProblemServiceImpl;
 import com.service.SolutionServiceImpl;
+import com.service.StatisticsServiceImpl;
 import com.service.TestServiceImpl;
 
 @RestController
@@ -29,6 +30,9 @@ public class ProblemController {
 	
 	@Autowired
 	SolutionServiceImpl solutionService;
+	
+	@Autowired
+	StatisticsServiceImpl statisticsService;
 	
 	@Autowired
 	TestServiceImpl testService;
@@ -110,9 +114,9 @@ public class ProblemController {
 	
 	//STATISTICS
 	@ApiOperation(value = "getStatistics", nickname = "getStatistics")
-	@RequestMapping(value = "/{problemId}/statistics/{statisticsId}", method = RequestMethod.GET)
-	public String getStatisticss(@PathVariable Long problemId, @PathVariable Long statisticsId){
-		return String.format("Id problema passado: %s e statisticsId: %s", problemId, statisticsId);
+	@RequestMapping(value = "/statistics", method = RequestMethod.GET)
+	public ResponseEntity<String> getStatisticss(){
+		return new ResponseEntity<String>(statisticsService.getGeneralStatistics(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "getStatistics", nickname = "getStatistics")
