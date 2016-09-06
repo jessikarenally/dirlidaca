@@ -1,10 +1,10 @@
-package com.persistence;
+package com.dao.solution;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.model.Solution;
+import com.model.solution.Solution;
 
 public interface SolutionRepository extends  CrudRepository<Solution, Long>{
 

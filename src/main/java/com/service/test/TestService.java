@@ -1,8 +1,8 @@
-package com.service;
+package com.service.test;
 
 import java.util.List;
 
-import com.model.ProblemTest;
+import com.model.test.ProblemTest;
 
 public interface TestService {
 	public List<ProblemTest> findAll();

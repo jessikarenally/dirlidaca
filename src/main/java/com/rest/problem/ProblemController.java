@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.problem;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.model.Problem;
-import com.model.ProblemTest;
-import com.model.Solution;
-import com.service.ProblemServiceImpl;
-import com.service.SolutionServiceImpl;
-import com.service.StatisticsServiceImpl;
-import com.service.TestServiceImpl;
+import com.model.problem.Problem;
+import com.model.solution.Solution;
+import com.model.test.ProblemTest;
+import com.service.problem.ProblemServiceImpl;
+import com.service.solution.SolutionServiceImpl;
+import com.service.statistics.StatisticsServiceImpl;
+import com.service.test.TestServiceImpl;
 
 @RestController
 @RequestMapping(value="/problem")

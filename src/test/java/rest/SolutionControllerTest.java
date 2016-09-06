@@ -16,11 +16,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.Application;
 import com.auth.UserLogin;
 import com.google.gson.Gson;
-import com.model.Solution;
-import com.model.User;
-import com.rest.ProblemController;
-import com.rest.SolutionController;
-import com.rest.UserController;
+import com.model.solution.Solution;
+import com.model.user.User;
+import com.rest.problem.ProblemController;
+import com.rest.solution.SolutionController;
+import com.rest.user.UserController;
 
 
 @SpringApplicationConfiguration(classes = Application.class)

@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.test;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.model.ProblemTest;
-import com.service.TestServiceImpl;
+import com.model.test.ProblemTest;
+import com.service.test.TestServiceImpl;
 
 @RestController
 @RequestMapping(value="/test")

@@ -1,4 +1,4 @@
-package com.model;
+package com.model.problem;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.service;
+package com.service.problem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.model.Problem;
-import com.model.Solution;
-import com.persistence.ProblemRepository;
+import com.dao.problem.ProblemRepository;
+import com.model.problem.Problem;
+import com.model.solution.Solution;
 
 @Service
 public class ProblemServiceImpl implements ProblemService{

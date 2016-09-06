@@ -1,10 +1,10 @@
-package com.service;
+package com.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.model.User;
-import com.persistence.UserRepository;
+import com.dao.user.UserRepository;
+import com.model.user.User;
 
 @Service
 public class UserServiceImpl implements UserService{

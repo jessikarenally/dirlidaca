@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.Application;
 import com.google.gson.Gson;
-import com.model.User;
-import com.rest.UserController;
+import com.model.user.User;
+import com.rest.user.UserController;
 
 
 @SpringApplicationConfiguration(classes = Application.class)

@@ -1,10 +1,10 @@
-package com.persistence;
+package com.dao.user;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.model.User;
+import com.model.user.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 	

@@ -1,7 +1,10 @@
-package com.service;
+package com.service.statistics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.service.problem.ProblemServiceImpl;
+import com.service.user.UserServiceImpl;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {

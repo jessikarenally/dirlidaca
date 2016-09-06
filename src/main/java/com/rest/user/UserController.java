@@ -1,4 +1,4 @@
-package com.rest;
+package com.rest.user;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.LoginResponse;
 import com.auth.UserLogin;
-import com.model.User;
-import com.service.UserServiceImpl;
+import com.model.user.User;
+import com.service.user.UserServiceImpl;
 
 @Api
 @RestController

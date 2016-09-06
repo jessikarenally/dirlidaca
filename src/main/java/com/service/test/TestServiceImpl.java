@@ -1,12 +1,12 @@
-package com.service;
+package com.service.test;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.model.ProblemTest;
-import com.persistence.TestRepository;
+import com.dao.test.TestRepository;
+import com.model.test.ProblemTest;
 
 @Service
 public class TestServiceImpl implements TestService {

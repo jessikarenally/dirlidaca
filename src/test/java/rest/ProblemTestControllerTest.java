@@ -16,10 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.Application;
 import com.auth.UserLogin;
 import com.google.gson.Gson;
-import com.model.ProblemTest;
-import com.model.User;
-import com.rest.TestController;
-import com.rest.UserController;
+import com.model.test.ProblemTest;
+import com.model.user.User;
+import com.rest.test.TestController;
+import com.rest.user.UserController;
 
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest()

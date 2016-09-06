@@ -1,8 +1,8 @@
-package com.service;
+package com.service.problem;
 
 import java.util.List;
 
-import com.model.Problem;
+import com.model.problem.Problem;
 
 public interface ProblemService {
 

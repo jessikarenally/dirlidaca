@@ -1,10 +1,10 @@
-package com.persistence;
+package com.dao.problem;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.model.Problem;
+import com.model.problem.Problem;
 
 public interface ProblemRepository extends CrudRepository<Problem, Long>{
 	

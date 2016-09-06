@@ -1,12 +1,12 @@
-package com.service;
+package com.service.solution;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.model.Solution;
-import com.persistence.SolutionRepository;
+import com.dao.solution.SolutionRepository;
+import com.model.solution.Solution;
 
 @Service
 public class SolutionServiceImpl implements SolutionService{
