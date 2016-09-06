@@ -1,7 +1,13 @@
 package com.rest;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.Date;
+
+import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth.LoginResponse;
+import com.auth.UserLogin;
 import com.model.User;
 import com.service.UserServiceImpl;
 
@@ -31,8 +39,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(){
-		return String.format("Logado");
+	public ResponseEntity<LoginResponse> login(@RequestBody UserLogin login){
+		User user = userService.getUserByUsername(login.getUsername());
+		LoginResponse res = null;
+		if (login.getUsername() == null || user == null) {
+            return new ResponseEntity<LoginResponse>(res, HttpStatus.UNAUTHORIZED);
+        }
+        res = new LoginResponse(Jwts.builder().setSubject(login.getUsername())
+            .claim("roles", userService.getUserByUsername(login.getUsername())).setIssuedAt(new Date())
+            .signWith(SignatureAlgorithm.HS256, "dacasecretkey").compact());
+        return new ResponseEntity<LoginResponse>(res,HttpStatus.UNAUTHORIZED);
 	}
 	
 	@ApiOperation(value = "userId", nickname = "userId")

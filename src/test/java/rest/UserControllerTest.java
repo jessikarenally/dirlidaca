@@ -2,8 +2,10 @@ package rest;
 
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +18,6 @@ import com.Application;
 import com.google.gson.Gson;
 import com.model.User;
 import com.rest.UserController;
-import static org.hamcrest.Matchers.*;
 
 
 @SpringApplicationConfiguration(classes = Application.class)
@@ -26,6 +27,7 @@ public class UserControllerTest {
 
 	private Gson gson;
 	User user;
+	long id ;
 	@Autowired
 	private UserController userController;
 
@@ -33,9 +35,16 @@ public class UserControllerTest {
 	public void setUp(){
 		gson = new Gson();
 		user = new User("john", "j@j.com");
-		
+		id = userController.addUser(user).getBody().getId();
 	}
-
+	
+	@After
+	public void removeUser(){
+		if(userController.getUser(user.getId()) != null){
+			userController.deleteUser(user.getId());
+		}
+	}
+	
 	@Test
 	public void testLogin() {
 	}
@@ -53,7 +62,6 @@ public class UserControllerTest {
 
 	@Test
 	public void testGetUserByUsername() {
-		long id = userController.addUser(user).getBody().getId();
 		
 		given()
 			.accept("application/json")
@@ -66,30 +74,10 @@ public class UserControllerTest {
 			.body("email", equalTo("j@j.com"));
 	}
 	
-	@Test
-	public void testDeleteUserByUserId() {
-		long id = userController.addUser(user).getBody().getId();
-		
-		given()
-			.pathParam("userId", id).
-		when()
-			.delete("/user/{userId}").
-		then()
-			.assertThat().statusCode(is(200));
-		given()
-			.pathParam("userId", id).
-		when()
-			.get("user/{userId}").
-		then()
-			.assertThat().statusCode(is(404));
-		
-	}
 
 	@Test
 	public void testEditUserByUserId() {
 		User newUser = new User("paul", "p@p.com");
-		long id = userController.addUser(user).getBody().getId();
-		
 		given()
 			.contentType("application/json")
 			.pathParam("userId", id)
@@ -101,4 +89,7 @@ public class UserControllerTest {
 			.body("username", equalTo("paul"))
 			.body("email", equalTo("p@p.com"));
 	}
+	
+	
 }
+

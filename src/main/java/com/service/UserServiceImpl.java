@@ -1,7 +1,5 @@
 package com.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserRepository userRepository;
 	
-	public List<User> getUserByUsername(String username){
+	public User getUserByUsername(String username){
 		return userRepository.findByUsername(username);
 	}
 

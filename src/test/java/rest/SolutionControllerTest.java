@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.Application;
+import com.auth.UserLogin;
 import com.google.gson.Gson;
 import com.model.Solution;
 import com.model.User;
@@ -34,18 +36,29 @@ public class SolutionControllerTest {
 	private ProblemController problemController;
 	@Autowired
 	private UserController userController;
-
+	private User user;
+	private String token;
 	
 	@Before
 	public void setUp(){
 		solution = new Solution("abc", "abc", "abc", true, 1);
 		gson = new Gson();
+		user = new User("joao", "joao","joao");
+		userController.addUser(user);
+		UserLogin login = new UserLogin(user.getUsername(),user.getPassword());
+		token = userController.login(login).getBody().getToken();
+		gson = new Gson();
+	}
+	
+	@After
+	public void removeUser(){
+		userController.deleteUser(user.getId());
 	}
 
 	@Test
 	public void testGetNonExistingSolution(){
 		long id = 9129391239L; //Non Existing Id
-		given()
+		given().header("Authorization",token)
 			.pathParam("solutionId", id).
 		when()
 			.get("/solution/{solutionId}").
@@ -56,7 +69,7 @@ public class SolutionControllerTest {
 	@Test
 	public void testGetSolutionById(){
 		long id = problemController.submitSolution(1L, solution).getBody().getId();
-		given()
+		given().header("Authorization",token)
 			.contentType("application/json")
 			.pathParam("solutionId", id)
 		.when()
@@ -71,7 +84,7 @@ public class SolutionControllerTest {
 	public void testGetUserSolution(){
 		User user = new User("john", "j@j.com");
 		long id = userController.addUser(user).getBody().getId();
-		given()
+		given().header("Authorization",token)
 			.contentType("application/json")
 			.pathParam("userId", id)
 		.when()
@@ -84,7 +97,7 @@ public class SolutionControllerTest {
 	@Test
 	public void testDeleteSolution(){
 		long id = problemController.submitSolution(1L, solution).getBody().getId();
-		given()
+		given().header("Authorization",token)
 			.contentType("application/json")
 			.pathParam("solutionId", id)
 		.when()
@@ -92,7 +105,7 @@ public class SolutionControllerTest {
 		.then()
 			.statusCode(is(200));
 		//check it's really gone
-		given()
+		given().header("Authorization",token)
 			.contentType("application/json")
 			.pathParam("solutionId", id)
 		.when()
@@ -106,7 +119,7 @@ public class SolutionControllerTest {
 		long id = problemController.submitSolution(1L, solution).getBody().getId();
 		Solution newSolution = new Solution("teste", "teste", "teste", false, 1);
 		
-		given()
+		given().header("Authorization",token)
 			.contentType("application/json")
 			.pathParam("solutionId", id)
 			.body(gson.toJson(newSolution))
