@@ -2,13 +2,14 @@ package com;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.integration.config.EnableIntegration;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
@@ -20,13 +21,25 @@ import com.auth.JwtFilter;
 
 @EnableSwagger2
 @SpringBootApplication
-@ComponentScan()
+@EnableIntegration
 public class Application extends SpringBootServletInitializer {
 
+	@Value("${kafka.topic}")
+	private String topic;
+
+	@Value("${kafka.messageKey}")
+	private String messageKey;
+
+	@Value("${kafka.broker.address}")
+	private String brokerAddress;
+
+	@Value("${kafka.zookeeper.connect}")
+	private String zookeeperConnect;
+	
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
+    
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);

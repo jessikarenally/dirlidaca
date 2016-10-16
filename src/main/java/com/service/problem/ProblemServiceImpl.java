@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.kafka.support.KafkaNull;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
+import com.Application;
 import com.dao.problem.ProblemRepository;
+import com.kafka.ReceiverKafka;
 import com.model.problem.Problem;
 import com.model.solution.Solution;
 
@@ -15,6 +22,8 @@ public class ProblemServiceImpl implements ProblemService{
 	
 	@Autowired
 	ProblemRepository problemRepository;
+	
+	ReceiverKafka receiver;
 
 	@Override
 	public List<Problem> findAll() {
@@ -22,6 +31,8 @@ public class ProblemServiceImpl implements ProblemService{
 		for(Problem element:problemRepository.findAll()){
 			result.add(element);
 		}
+		receiver = new ReceiverKafka();
+		receiver.receiveFromKafka();
 		return result;
 	}
 
@@ -38,6 +49,7 @@ public class ProblemServiceImpl implements ProblemService{
 	@Override
 	public void save(Problem problem) {
 		problemRepository.save(problem);
+		sendToKafka(problem);
 	}
 	
 	@Override
@@ -49,4 +61,23 @@ public class ProblemServiceImpl implements ProblemService{
 	public long countProblems() {
 		return problemRepository.count();
 	}
+	
+	/**
+ 	 * Envia um problema pra ser armazenado no Kafka
+ 	 * 
+ 	 * @param soluçao a ser salva
+ 	 */
+ 	public void sendToKafka(Problem problem) {
+ 		ConfigurableApplicationContext context = 
+ 				new SpringApplicationBuilder(Application.class)
+			 		.web(false)
+			 		.run();
+ 		MessageChannel toKafka = context.getBean("toKafka", MessageChannel.class);
+ 		for (int i = 0; i < 10; i++) {
+ 			toKafka.send(new GenericMessage<>(problem.toString()));
+ 		}
+ 		toKafka.send(new GenericMessage<>(KafkaNull.INSTANCE));
+ 
+ 		context.close();
+ 	}
 }

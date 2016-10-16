@@ -3,10 +3,17 @@ package com.service.solution;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.kafka.support.KafkaNull;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
+import com.Application;
 import com.dao.solution.SolutionRepository;
 import com.model.solution.Solution;
+
 
 @Service
 public class SolutionServiceImpl implements SolutionService{
@@ -41,6 +48,5 @@ public class SolutionServiceImpl implements SolutionService{
 
 	public List<Solution> getSolutionsByUserId(Long userId) {
 		return solutionRepository.findByUserId(userId);
-	}	
-
+	}		
 }
