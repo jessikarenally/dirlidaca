@@ -47,12 +47,22 @@ public class ProblemController {
 								: new ResponseEntity<List<Problem>>(problems,HttpStatus.NOT_FOUND);
 	}
 	
+	
+	
 	@CrossOrigin
 	@ApiOperation(value = "saveProblems", nickname = "saveProblems")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Problem> saveProblem(@RequestBody Problem problem){
 		problemService.save(problem);
 		return new ResponseEntity<Problem>(problem,HttpStatus.CREATED);
+	}
+	
+	@CrossOrigin
+	@ApiOperation(value = "updateProblems", nickname = "updateProblems")
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<Problem> updateProblem(@RequestBody Problem problem){
+		problemService.save(problem);
+		return new ResponseEntity<Problem>(problem,HttpStatus.OK);
 	}
 	
 	@CrossOrigin
